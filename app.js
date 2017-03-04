@@ -4,7 +4,23 @@ var express = require('express'),
     morgan = require('morgan'),
     restful = require('node-restful'),
     mongoose = restful.mongoose;
+
+/*const jwt= require('express-jwt');
+
+const authCheck = jwt({
+  secret: new Buffer('YOUR-AUTH0-SECRET', 'base64'),
+  audience:'YOUR-AUTH0-CLIENT-ID'
+})*/
+
 var app = express();
+
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({'extended':'true'}));
@@ -23,7 +39,7 @@ var Resource = app.resource = restful.model('click', mongoose.Schema({
 
   var Resource2 = app.resource = restful.model('user', mongoose.Schema({
     username:{ type: String},
-     email:{ type: String, required:true, unique:true},
+     email:{ type: String, unique:true},
      clicked:{type:Number}
   },
    {timestamps: true}
