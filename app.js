@@ -22,10 +22,12 @@ var Resource = app.resource = restful.model('click', mongoose.Schema({
   .methods(['get', 'post', 'put', 'delete']);
 
   var Resource2 = app.resource = restful.model('user', mongoose.Schema({
-    username:{ type: String, required:true, unique:true},
-    email:{ type: String, required:true, unique:true},
-    timestamp:{ type: Date, required:true},
-  }))
+    username:{ type: String},
+     email:{ type: String, required:true, unique:true},
+     clicked:{type:Number}
+  },
+   {timestamps: true}
+   ))
   .methods(['get', 'post', 'put', 'delete']);
 
 Resource.register(app, '/click');
